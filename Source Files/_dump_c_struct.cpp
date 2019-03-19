@@ -32,7 +32,7 @@ void _dump_tag_struct(tag_struct* tag)
 		{			
 			_write_padding(t->offset - offset, fout);
 			fout << "//0x" << std::hex << curr_offset << '\n';
-			offset = t->offset;
+			curr_offset=offset = t->offset;
 		}		
 		switch (t->type)
 		{
@@ -149,7 +149,7 @@ void _dump_tag_struct(tag_struct* tag)
 		offset = tag->base_size;
 	}
 	fout << "};\n";
-	fout << "TAG_BLOCK_SIZE_ASSERT(" << struct_name << "," << tag->base_size << ");\n";
+	fout << "TAG_BLOCK_SIZE_ASSERT(" << struct_name << ",0x" << std::hex<< tag->base_size << ");\n";
 
 	fout << "}\n}\n}\n}\n";
 	
@@ -210,6 +210,7 @@ void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream&
 	std::string struct_name = _correct_var_name(field->name);
 	fout << "struct " + struct_name + "\n{\n";
 	int offset = 0x0;
+	
 	for (int i = 0; i < field->child_fields.size(); i++)
 	{
 		int curr_offset = offset;
@@ -335,7 +336,7 @@ void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream&
 		offset = field->block_size;
 	}
 	fout << "};\n";
-	fout << "TAG_BLOCK_SIZE_ASSERT(" << struct_name << "," << field->block_size << ");\n";
+	fout << "TAG_BLOCK_SIZE_ASSERT(" << struct_name << ",0x" << std::hex<< field->block_size << ");\n";
 	fout << "Blam::Cache::DataTypes::Reflexive<" << struct_name << "> " << struct_name << ";";
 }
 void _write_padding(unsigned int pad_size, std::ofstream& file)
@@ -351,13 +352,13 @@ std::string _correct_var_name(std::string name)
 	int i = 0;
 	while (name[i])
 	{
-		if (!std::isblank(name[i]))
+		if (!std::isblank(name[i]) || name[i]!='-')
 			temp += name[i];
 		i++;
 	}
 	//Fix for First Character as Number	
 	if (!std::isalpha(temp[0]))
 		temp = "NUM_" + temp;
-
+	
 	return temp;
 }

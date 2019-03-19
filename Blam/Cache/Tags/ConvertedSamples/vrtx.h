@@ -13,24 +13,24 @@ namespace vrtx
 {
 struct vrtx
 {
-enum class PlatformType : __int8
+enum class Platform Type : __int8
 {
 PC = 0,
 XBOX = 1,
 };
-PlatformType PlatformType;//0x0
+Platform Type Platform Type;//0x0
 PAD(3);//0x1
-struct GeometryClassifications
+struct Geometry Classifications
 {
 __int32 Unknown;//0x0
-Blam::Cache::DataTypes::dataRef Compiledshader;//0x4
+Blam::Cache::DataTypes::dataRef Compiled shader;//0x4
 Blam::Cache::DataTypes::dataRef Code;//0xc
 };
-TAG_BLOCK_SIZE_ASSERT(GeometryClassifications,14);
-Blam::Cache::DataTypes::Reflexive<GeometryClassifications> GeometryClassifications;//0x1
-__int32 outputswizzles;//0xc
+TAG_BLOCK_SIZE_ASSERT(Geometry Classifications,0x14);
+Blam::Cache::DataTypes::Reflexive<Geometry Classifications> Geometry Classifications;//0x4
+__int32 output swizzles;//0xc
 };
-TAG_BLOCK_SIZE_ASSERT(vrtx,10);
+TAG_BLOCK_SIZE_ASSERT(vrtx,0x10);
 }
 }
 }

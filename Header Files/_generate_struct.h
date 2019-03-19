@@ -21,7 +21,7 @@ namespace struct_generator
 	/*
 	Reads and fills in the elements of an enum
 	*/
-	void _fill_enum_elements(tinyxml2::XMLElement* c_element, std::vector<_enum16> &enum16_elements);
+	void _fill_enum_elements(tinyxml2::XMLElement* c_element, std::vector<_enum> &enum_elements);
 	/*
 	Reads and fills in the elements of a bit field
 	*/

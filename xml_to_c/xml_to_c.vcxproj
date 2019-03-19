@@ -84,13 +84,13 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>..\Header Files\pch.h"</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,22 +151,41 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="tinyxml2.h" />
-    <ClInclude Include="_generate_struct.h" />
-    <ClInclude Include="_plugin_field.h" />
+    <ClInclude Include="..\Blam\Cache\DataTypes\Bitfield.h" />
+    <ClInclude Include="..\Blam\Cache\DataTypes\Bitfield0.5.h" />
+    <ClInclude Include="..\Blam\Cache\DataTypes\DataRef.h" />
+    <ClInclude Include="..\Blam\Cache\DataTypes\DataTypes.h" />
+    <ClInclude Include="..\Blam\Cache\DataTypes\DatumIndex.h" />
+    <ClInclude Include="..\Blam\Cache\DataTypes\Pad.h" />
+    <ClInclude Include="..\Blam\Cache\DataTypes\Reflexive.h" />
+    <ClInclude Include="..\Blam\Cache\DataTypes\StringID.h" />
+    <ClInclude Include="..\Blam\Cache\DataTypes\Strings.h" />
+    <ClInclude Include="..\Blam\Cache\DataTypes\TagRef.h" />
+    <ClInclude Include="..\Blam\Cache\DataTypes\_global_declarations.h" />
+    <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\foot.h" />
+    <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\gldf.h" />
+    <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\itmc.h" />
+    <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\matg.h" />
+    <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\vrtx.h" />
+    <ClInclude Include="..\Blam\Cache\Tags\gldf.h" />
+    <ClInclude Include="..\Blam\Cache\Tags\vrtx.h" />
+    <ClInclude Include="..\Blam\Cache\tag_block_assert.h" />
+    <ClInclude Include="..\Blam\Enums\Tags\TagGroups.h" />
+    <ClInclude Include="..\Header Files\pch.h" />
+    <ClInclude Include="..\Header Files\tinyxml2.h" />
+    <ClInclude Include="..\Header Files\_dump_c_struct.h" />
+    <ClInclude Include="..\Header Files\_generate_struct.h" />
+    <ClInclude Include="..\Header Files\_plugin_field.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    <ClCompile Include="..\Source Files\pch.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\Header Files\pch.h"</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="tinyxml2.cpp" />
-    <ClCompile Include="xml_to_c.cpp" />
-    <ClCompile Include="_generate_struct.cpp" />
-    <ClCompile Include="_plugin_field.cpp" />
+    <ClCompile Include="..\Source Files\tinyxml2.cpp" />
+    <ClCompile Include="..\Source Files\xml_to_c.cpp" />
+    <ClCompile Include="..\Source Files\_dump_c_struct.cpp" />
+    <ClCompile Include="..\Source Files\_generate_struct.cpp" />
+    <ClCompile Include="..\Source Files\_plugin_field.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,10 +1,11 @@
 #include<iostream>
-#include "pch.h"
-#include "_generate_struct.h"
+#include "..\Header Files\pch.h"
+#include "..\Header Files\_generate_struct.h"
 
 
 namespace struct_generator
 {
+
 	tag_struct* _generate_tag_struct(std::string file_loc)
 	{
 		tag_struct* ret = new tag_struct();
@@ -14,7 +15,7 @@ namespace struct_generator
 
 		if (error == tinyxml2::XML_ERROR_FILE_NOT_FOUND)
 		{
-			//std::cout << "\nCouldnt find file :" << file_loc;
+			std::cout << "\nCouldnt find file :" << file_loc;
 			return nullptr;
 		}
 		
@@ -22,11 +23,11 @@ namespace struct_generator
 		const char* base_size_text = root_element->Attribute("baseSize");
 		if (base_size_text == nullptr)
 		{
-			//std::cout << "Couldnt find baseSize attribute";
+			std::cout << "Couldnt find baseSize attribute";
 			return nullptr;
 		}
 		ret->base_size= std::stoul(base_size_text, nullptr, 16);
-		ret->name = file_loc.substr(file_loc.rfind('\\'));
+		ret->name = file_loc.substr(file_loc.rfind('\\') + 1);
 
 		_generate_tag_field(root_element->FirstChildElement(), ret->child_fields);
 		return ret;
@@ -93,6 +94,18 @@ namespace struct_generator
 
 				parent_field_list.push_back(child_field);
 			}
+			else if (element_name == "enum8")
+			{
+				std::shared_ptr<_plugin_field> child_field = std::make_shared<_plugin_field>();
+
+				child_field->name = child_element->Attribute("name");
+				child_field->type = field_type::enum8;
+				child_field->offset = std::stoul(child_element->Attribute("offset"), nullptr, 16);
+
+				_fill_enum_elements(child_element->FirstChildElement(), child_field->enum_elements);
+
+				parent_field_list.push_back(child_field);
+			}
 			else if (element_name == "enum16")
 			{
 				std::shared_ptr<_plugin_field> child_field = std::make_shared<_plugin_field>();
@@ -101,7 +114,19 @@ namespace struct_generator
 				child_field->type = field_type::enum16;
 				child_field->offset = std::stoul(child_element->Attribute("offset"), nullptr, 16);
 
-				_fill_enum_elements(child_element->FirstChildElement(), child_field->enum16_elements);
+				_fill_enum_elements(child_element->FirstChildElement(), child_field->enum_elements);
+
+				parent_field_list.push_back(child_field);
+			}
+			else if (element_name == "enum32")
+			{
+				std::shared_ptr<_plugin_field> child_field = std::make_shared<_plugin_field>();
+
+				child_field->name = child_element->Attribute("name");
+				child_field->type = field_type::enum32;
+				child_field->offset = std::stoul(child_element->Attribute("offset"), nullptr, 16);
+
+				_fill_enum_elements(child_element->FirstChildElement(), child_field->enum_elements);
 
 				parent_field_list.push_back(child_field);
 			}
@@ -181,6 +206,26 @@ namespace struct_generator
 
 			parent_field_list.push_back(child_field);
 			}
+			else if (element_name == "uint16")
+			{
+			std::shared_ptr<_plugin_field> child_field = std::make_shared<_plugin_field>();
+
+			child_field->name = child_element->Attribute("name");
+			child_field->type = field_type::type_uint16;
+			child_field->offset = std::stoul(child_element->Attribute("offset"), nullptr, 16);
+
+			parent_field_list.push_back(child_field);
+			}
+			else if (element_name == "uint32")
+			{
+			std::shared_ptr<_plugin_field> child_field = std::make_shared<_plugin_field>();
+
+			child_field->name = child_element->Attribute("name");
+			child_field->type = field_type::type_uint32;
+			child_field->offset = std::stoul(child_element->Attribute("offset"), nullptr, 16);
+
+			parent_field_list.push_back(child_field);
+			}
 			else if (element_name == "float32")
 			{
 			std::shared_ptr<_plugin_field> child_field = std::make_shared<_plugin_field>();
@@ -198,7 +243,18 @@ namespace struct_generator
 			child_field->name = child_element->Attribute("name");
 			child_field->type = field_type::type_ascii;
 			child_field->offset = std::stoul(child_element->Attribute("offset"), nullptr, 16);
-			child_field->ascii_length = std::stoul(child_element->Attribute("size"), nullptr, 16);
+			child_field->string_size = std::stoul(child_element->Attribute("size"), nullptr, 16);
+
+			parent_field_list.push_back(child_field);
+			}
+			else if (element_name == "utf16")
+			{
+			std::shared_ptr<_plugin_field> child_field = std::make_shared<_plugin_field>();
+
+			child_field->name = child_element->Attribute("name");
+			child_field->type = field_type::type_utf16;
+			child_field->offset = std::stoul(child_element->Attribute("offset"), nullptr, 16);
+			child_field->string_size = std::stoul(child_element->Attribute("size"), nullptr, 16);
 
 			parent_field_list.push_back(child_field);
 			}
@@ -206,16 +262,16 @@ namespace struct_generator
 			child_element = child_element->NextSiblingElement();
 		}
 	}
-	void _fill_enum_elements(tinyxml2::XMLElement* child_element, std::vector<_enum16> &enum16_elements)
+	void _fill_enum_elements(tinyxml2::XMLElement* child_element, std::vector<_enum> &enum_elements)
 	{
 		while (child_element)
 		{
-			_enum16 t;
+			_enum t;
 
 			t.name = child_element->Attribute("name");
 			t.value = std::stoul(child_element->Attribute("value"), nullptr, 16);
 
-			enum16_elements.push_back(t);
+			enum_elements.push_back(t);
 
 			child_element = child_element->NextSiblingElement();
 		}

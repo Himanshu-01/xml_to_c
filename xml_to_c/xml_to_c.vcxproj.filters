@@ -13,35 +13,122 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Blam">
+      <UniqueIdentifier>{cd1c8290-8770-45bf-be7c-7a01c49345ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blam\Cache">
+      <UniqueIdentifier>{ab8285d0-ca3d-472a-a82a-a9b91db46445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blam\Cache\DataTypes">
+      <UniqueIdentifier>{82e9eccf-760d-45ce-a46c-17ab3e3240af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blam\Cache\Tags">
+      <UniqueIdentifier>{73156f88-82c9-4e60-b32f-7ebf2620cbec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blam\Enums">
+      <UniqueIdentifier>{d44f837a-4a1d-48a4-953e-8aee85ad8b13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blam\Enums\Tags">
+      <UniqueIdentifier>{d50ce456-c23e-4ac4-a2f2-5de0093a17cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blam\Cache\Tags\ConvertedSamples">
+      <UniqueIdentifier>{615abbf4-7e81-4cec-a778-2fa1cc07b09f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="..\Header Files\tinyxml2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tinyxml2.h">
+    <ClInclude Include="..\Header Files\_dump_c_struct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_plugin_field.h">
+    <ClInclude Include="..\Header Files\_generate_struct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_generate_struct.h">
+    <ClInclude Include="..\Header Files\_plugin_field.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header Files\pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\tag_block_assert.h">
+      <Filter>Blam\Cache</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\DataTypes\Bitfield.h">
+      <Filter>Blam\Cache\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\DataTypes\Bitfield0.5.h">
+      <Filter>Blam\Cache\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\DataTypes\DataRef.h">
+      <Filter>Blam\Cache\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\DataTypes\DataTypes.h">
+      <Filter>Blam\Cache\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\DataTypes\DatumIndex.h">
+      <Filter>Blam\Cache\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\DataTypes\Pad.h">
+      <Filter>Blam\Cache\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\DataTypes\Reflexive.h">
+      <Filter>Blam\Cache\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\DataTypes\StringID.h">
+      <Filter>Blam\Cache\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\DataTypes\Strings.h">
+      <Filter>Blam\Cache\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\DataTypes\TagRef.h">
+      <Filter>Blam\Cache\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\DataTypes\_global_declarations.h">
+      <Filter>Blam\Cache\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\Tags\vrtx.h">
+      <Filter>Blam\Cache\Tags</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\Tags\gldf.h">
+      <Filter>Blam\Cache\Tags</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Enums\Tags\TagGroups.h">
+      <Filter>Blam\Enums\Tags</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\vrtx.h">
+      <Filter>Blam\Cache\Tags\ConvertedSamples</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\foot.h">
+      <Filter>Blam\Cache\Tags\ConvertedSamples</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\gldf.h">
+      <Filter>Blam\Cache\Tags\ConvertedSamples</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\itmc.h">
+      <Filter>Blam\Cache\Tags\ConvertedSamples</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\matg.h">
+      <Filter>Blam\Cache\Tags\ConvertedSamples</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="..\Source Files\_dump_c_struct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="xml_to_c.cpp">
+    <ClCompile Include="..\Source Files\_generate_struct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tinyxml2.cpp">
+    <ClCompile Include="..\Source Files\_plugin_field.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="_plugin_field.cpp">
+    <ClCompile Include="..\Source Files\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="_generate_struct.cpp">
+    <ClCompile Include="..\Source Files\tinyxml2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source Files\xml_to_c.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

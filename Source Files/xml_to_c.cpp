@@ -1,12 +1,22 @@
 // xml_to_c.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include "pch.h"
+#include "..\Header Files\pch.h"
 #include <iostream>
+#include"..\Header Files\_generate_struct.h"
+#include"..\Header Files\_plugin_field.h"
+#include"..\Header Files\_dump_c_struct.h"
+
+char* SharedMapBase;
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+    std::cout << "Hello World!\n";
+	tag_struct* temp = struct_generator::_generate_tag_struct("C:\\Users\\asus\\Desktop\\test\\vrtx.xml");
+	_dump_tag_struct(temp);
+	
+
+	getchar();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

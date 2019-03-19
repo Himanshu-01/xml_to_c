@@ -352,7 +352,7 @@ std::string _correct_var_name(std::string name)
 	int i = 0;
 	while (name[i])
 	{
-		if (!std::isblank(name[i]) || name[i]!='-')
+		if (!std::isblank(name[i]) && name[i]!='-')
 			temp += name[i];
 		i++;
 	}

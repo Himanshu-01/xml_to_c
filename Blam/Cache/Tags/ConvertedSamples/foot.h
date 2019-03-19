@@ -15,36 +15,36 @@ struct foot
 {
 struct effects
 {
-struct Old Materials
+struct OldMaterials
 {
 Blam::Cache::DataTypes::tagRef Effect;//0x0
 Blam::Cache::DataTypes::tagRef Sound;//0x8
-Blam::Cache::DataTypes::StringID Material Name;//0x10
-__int16 Global Material Index;//0x14
-enum class Sweetener Mode : __int8
+Blam::Cache::DataTypes::StringID MaterialName;//0x10
+__int16 GlobalMaterialIndex;//0x14
+enum class SweetenerMode : __int8
 {
-Sweetener Default = 0,
-Sweetener Enabled = 1,
-Sweetener Disabled = 2,
+SweetenerDefault = 0,
+SweetenerEnabled = 1,
+SweetenerDisabled = 2,
 };
-Sweetener Mode Sweetener Mode;//0x16
+SweetenerMode SweetenerMode;//0x16
 __int8 Unknown;//0x17
 };
-TAG_BLOCK_SIZE_ASSERT(Old Materials,0x18);
-Blam::Cache::DataTypes::Reflexive<Old Materials> Old Materials;//0x0
+TAG_BLOCK_SIZE_ASSERT(OldMaterials,0x18);
+Blam::Cache::DataTypes::Reflexive<OldMaterials> OldMaterials;//0x0
 struct Sounds
 {
 Blam::Cache::DataTypes::tagRef Tag;//0x0
-Blam::Cache::DataTypes::tagRef Secondary Tag;//0x8
-Blam::Cache::DataTypes::StringID Material Name;//0x10
-__int16 Global Material Index;//0x14
-enum class Sweetener Mode : __int8
+Blam::Cache::DataTypes::tagRef SecondaryTag;//0x8
+Blam::Cache::DataTypes::StringID MaterialName;//0x10
+__int16 GlobalMaterialIndex;//0x14
+enum class SweetenerMode : __int8
 {
-Sweetener Default = 0,
-Sweetener Enabled = 1,
-Sweetener Disabled = 2,
+SweetenerDefault = 0,
+SweetenerEnabled = 1,
+SweetenerDisabled = 2,
 };
-Sweetener Mode Sweetener Mode;//0x16
+SweetenerMode SweetenerMode;//0x16
 __int8 Unknown;//0x17
 };
 TAG_BLOCK_SIZE_ASSERT(Sounds,0x18);
@@ -52,16 +52,16 @@ Blam::Cache::DataTypes::Reflexive<Sounds> Sounds;//0x8
 struct Effects
 {
 Blam::Cache::DataTypes::tagRef Tag;//0x0
-Blam::Cache::DataTypes::tagRef Secondary Tag;//0x8
-Blam::Cache::DataTypes::StringID Material Name;//0x10
-__int16 Global Material Index;//0x14
-enum class Sweetener Mode : __int8
+Blam::Cache::DataTypes::tagRef SecondaryTag;//0x8
+Blam::Cache::DataTypes::StringID MaterialName;//0x10
+__int16 GlobalMaterialIndex;//0x14
+enum class SweetenerMode : __int8
 {
-Sweetener Default = 0,
-Sweetener Enabled = 1,
-Sweetener Disabled = 2,
+SweetenerDefault = 0,
+SweetenerEnabled = 1,
+SweetenerDisabled = 2,
 };
-Sweetener Mode Sweetener Mode;//0x16
+SweetenerMode SweetenerMode;//0x16
 __int8 Unknown;//0x17
 };
 TAG_BLOCK_SIZE_ASSERT(Effects,0x18);

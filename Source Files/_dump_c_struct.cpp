@@ -7,8 +7,10 @@ void _dump_tag_struct(tag_struct* tag)
 {
 	char dir_loc[256];
 	GetCurrentDirectoryA(256, dir_loc);
-	std::string output_loc = dir_loc;
-	output_loc += '\\' + tag->name;
+	std::string output_loc = dir_loc;    
+	output_loc=output_loc.substr(0,output_loc.find_last_of("\\"));
+	output_loc += "\\Blam\\Cache\\Tags\\ConvertedSamples";
+	output_loc+= '\\' + tag->name;
 	output_loc.erase(output_loc.rfind('.'));
 	output_loc += ".h";
 

@@ -30,7 +30,7 @@ void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field,std::ofstream& 
 /*
 function to output the padding definion,based on the offset differences
 */
-void _write_padding(unsigned int pad_size, std::ofstream& file);
+void _write_padding(int pad_size, std::ofstream& file);
 #endif 
 
 

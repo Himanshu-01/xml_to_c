@@ -12,7 +12,7 @@ char* SharedMapBase;
 int main()
 {
     std::cout << "Hello World!\n";
-	tag_struct* temp = struct_generator::_generate_tag_struct("C:\\Users\\asus\\Desktop\\test\\vrtx.xml");
+	tag_struct* temp = struct_generator::_generate_tag_struct("C:\\Users\\asus\\Desktop\\test\\foot.xml");
 	_dump_tag_struct(temp);
 	
 

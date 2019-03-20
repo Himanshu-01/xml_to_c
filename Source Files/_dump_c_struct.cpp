@@ -33,7 +33,7 @@ void _dump_tag_struct(tag_struct* tag)
 		if (offset != t->offset)
 		{			
 			_write_padding(t->offset - offset, fout);
-			fout << "//0x" << std::hex << curr_offset << '\n';
+			fout << "//0x" << std::uppercase<<std::hex << curr_offset << '\n';
 			curr_offset=offset = t->offset;
 		}		
 		switch (t->type)
@@ -141,17 +141,17 @@ void _dump_tag_struct(tag_struct* tag)
 			offset += 4;
 			break;
 		}
-		fout << "//0x" << std::hex << curr_offset << '\n';
+		fout << "//0x" << std::uppercase<<std::hex << curr_offset << '\n';
 	}
 	if (tag->base_size != offset)
 	{
 		//requires padding		
 		_write_padding(tag->base_size - offset, fout);
-		fout << "//0x" << std::hex << offset << '\n';
+		fout << "//0x" << std::uppercase<<std::hex << offset << '\n';
 		offset = tag->base_size;
 	}
 	fout << "};\n";
-	fout << "TAG_BLOCK_SIZE_ASSERT(" << struct_name << ",0x" << std::hex<< tag->base_size << ");\n";
+	fout << "TAG_BLOCK_SIZE_ASSERT(" << struct_name << ",0x" << std::uppercase<<std::hex<< tag->base_size << ");\n";
 
 	fout << "}\n}\n}\n}\n";
 	
@@ -179,7 +179,7 @@ void _dump_bitfield(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 	fout << "{\n";
 	std::vector<_bitfield> t = field->bitfield_element;
 	for (int i = 0; i < t.size(); i++)
-		fout << _correct_var_name(t[i].name) << " = " << (int)(t[i].index) << ",\n";
+		fout << _correct_var_name(t[i].name) << " = 0x"<< std::hex<<(int)(t[i].index) << ",\n";
 	fout << "};\n";
 
 	fout << "Blam::Cache::DataTypes::Bitfield" << p << "<" << _correct_var_name(field->name) << "> " << _correct_var_name(field->name) << ";";	
@@ -202,7 +202,7 @@ void _dump_enum(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 	fout << "{\n";
 	std::vector<_enum> t = field->enum_elements;
 	for (int i = 0; i < t.size(); i++)
-		fout << _correct_var_name(t[i].name) << " = " << t[i].value << ",\n";
+		fout << _correct_var_name(t[i].name) << " = 0x" << std::hex<<t[i].value << ",\n";
 	fout << "};\n";
 
 	fout << _correct_var_name(field->name) << " " << _correct_var_name(field->name) << ";";
@@ -220,7 +220,7 @@ void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream&
 		if (offset != t->offset)
 		{			
 			_write_padding(t->offset - offset, fout);
-			fout << "//0x" << std::hex << curr_offset << '\n';
+			fout << "//0x" << std::uppercase<<std::hex << curr_offset << '\n';
 			curr_offset=offset = t->offset;
 		}		
 		switch (t->type)
@@ -328,7 +328,7 @@ void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream&
 			offset += 4;
 			break;
 		}
-		fout << "//0x" << std::hex<<curr_offset << '\n';
+		fout << "//0x" << std::uppercase<<std::hex<<curr_offset << '\n';
 	}
 	if (field->block_size != offset)
 	{
@@ -341,21 +341,49 @@ void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream&
 	fout << "TAG_BLOCK_SIZE_ASSERT(" << struct_name << ",0x" << std::hex<< field->block_size << ");\n";
 	fout << "Blam::Cache::DataTypes::Reflexive<" << struct_name << "> " << struct_name << ";";
 }
-void _write_padding(unsigned int pad_size, std::ofstream& file)
+void _write_padding(int pad_size, std::ofstream& file)
 {
-	if (pad_size < 0)
-		throw new std::exception("Please correctly order the field elements\n");
+	//if (pad_size < 0)
+	//	throw new std::exception("Please correctly order the field elements\n");
 
-	file << "PAD("<<std::dec<<pad_size<<");";
+	if (pad_size < 0)
+	{
+		file << "////	WARNING :: WRONG SIZE OF STRUCT OR OFFSETS	////PLZ Verify\n";
+		file << "PAD("<< std::dec << pad_size << ");";
+	}
+	else
+		file << "PAD(0x"<<std::uppercase<<std::hex << pad_size<<");";
 }
 std::string _correct_var_name(std::string name)
 {
+	//Remove Unintended Characters and Add Style
+	char ignore_list[] = {'-','(',')','!','<','>','?'};
 	std::string temp = "";
 	int i = 0;
+	name[0] = std::toupper(name[0]); //Capitalise First Letter
 	while (name[i])
 	{
-		if (!std::isblank(name[i]) && name[i]!='-')
-			temp += name[i];
+		//Checks for Blank Space and modifies adjacent element
+		if (!std::isblank(name[i]))
+		{
+			bool k = false;
+			for (int j = 0; j < sizeof(ignore_list); j++)
+				if (name[i] == ignore_list[j])
+				{
+					k = true;
+					break;
+				}
+			if(!k)
+				temp += name[i];
+		}
+		else
+		{
+			if ((i + 1) >= name.length())
+				throw new std::exception("Please correct the field name");
+
+			name[i + 1] = std::toupper(name[i + 1]);//Capatalise Next Letter
+		}
+		
 		i++;
 	}
 	//Fix for First Character as Number	

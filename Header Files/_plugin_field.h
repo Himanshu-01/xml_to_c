@@ -26,6 +26,7 @@ meta==compiled tag
 		bitfield8,
 		bitfield16,
 		bitfield32,
+		colorf,
 
 		//primitive types
 		type_int8,
@@ -73,6 +74,8 @@ meta==compiled tag
 		int block_size;//for the tag_blocks
 		//ascii size
 		int string_size;
+		//colorf format holder
+		std::string colorfomat;
 
 		//for copying operation
 		_plugin_field operator=(const _plugin_field &other);

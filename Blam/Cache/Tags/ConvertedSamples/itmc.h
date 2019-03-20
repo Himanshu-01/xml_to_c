@@ -11,6 +11,11 @@ namespace Blam
 		{
 			namespace Itmc
 			{
+				/*********************************************************************
+				* name:
+				* group_tag : Itmc
+				* header size : 12
+				* *********************************************************************/
 				struct Itmc
 				{
 					struct ItemPermutations
@@ -21,7 +26,7 @@ namespace Blam
 					};
 					TAG_BLOCK_SIZE_ASSERT(ItemPermutations, 0x10);
 					Blam::Cache::DataTypes::Reflexive<ItemPermutations> ItemPermutations;//0x0
-					unsigned __int32 UnusedSpawnTimeinSeconds, 0 = Default;//0x8
+					unsigned __int32 UnusedSpawnTimeinSeconds0 = Default;//0x8
 				};
 				TAG_BLOCK_SIZE_ASSERT(Itmc, 0xC);
 			}

@@ -11,30 +11,37 @@ namespace Blam
 		{
 			namespace Gldf
 			{
+				/*********************************************************************
+				* name:
+				* group_tag : Gldf
+				* header size : 8
+				* *********************************************************************/
 				struct Gldf
 				{
 					struct LightVariables
 					{
 						enum class ObjectsAffected : __int32
 						{
-							All = 0x0,
-							Biped = 0x1,
-							Vehicle = 0x2,
-							Weapon = 0x3,
-							Equipment = 0x4,
-							Garbage = 0x5,
-							Projectile = 0x6,
-							Scenery = 0x7,
-							Machine = 0x8,
-							Control = 0x9,
-							LightFixture = 0x10,
-							SoundScenery = 0x11,
-							Crate = 0x12,
-							Creature = 0x13,
+							All = 0,
+							Biped = 1,
+							Vehicle = 2,
+							Weapon = 3,
+							Equipment = 4,
+							Garbage = 5,
+							Projectile = 6,
+							Scenery = 7,
+							Machine = 8,
+							Control = 9,
+							LightFixture = 10,
+							SoundScenery = 11,
+							Crate = 12,
+							Creature = 13,
 						};
 						Blam::Cache::DataTypes::Bitfield32<ObjectsAffected> ObjectsAffected;//0x0
 						float LightmapBrightnessOffset;//0x4
-						PAD(0x1C);//0x8
+						Blam::Maths::Real::ColorRGB PrimaryMinLightmapColor;//0x8
+						Blam::Maths::Real::ColorRGB PrimaryMaxLightmapColor;//0x14
+						PAD(0x4);//0x20
 						Blam::Cache::DataTypes::dataRef PrimaryLightFunction;//0x24
 						float SecondaryMinLightmapColorR;//0x2C
 						float SecondaryMinLightmapColorG;//0x30

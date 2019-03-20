@@ -24,6 +24,13 @@ void _dump_tag_struct(tag_struct* tag)
 	
 
 	std::string struct_name = _correct_var_name(tag->name.substr(0, tag->name.rfind('.')));
+
+	fout << "\t\t/********************************************************************* \n\
+		* name: \n\
+		* group_tag : "<<struct_name<<"\n \
+		* header size : "<<tag->base_size<<"\n\
+		* *********************************************************************/ \n";
+
 	fout << "struct " + struct_name + "\n{\n";
 	int offset = 0x0;	
 	for (int i = 0; i < tag->child_fields.size(); i++)
@@ -140,6 +147,18 @@ void _dump_tag_struct(tag_struct* tag)
 			fout << "unsigned __int32 " << _correct_var_name(t->name) << ";";
 			offset += 4;
 			break;
+		case field_type::colorf:
+			if (t->colorfomat == "rgb")
+			{
+				fout << "Blam::Maths::Real::ColorRGB " << _correct_var_name(t->name) << ";";
+				offset += 12;
+			}
+			else if (t->colorfomat == "argb")
+			{
+				fout << "Blam::Maths::Real::ColorARGB " << _correct_var_name(t->name) << ";";
+				offset += 16;
+			}	
+			break;
 		}
 		fout << "//0x" << std::uppercase<<std::hex << curr_offset << '\n';
 	}
@@ -179,7 +198,7 @@ void _dump_bitfield(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 	fout << "{\n";
 	std::vector<_bitfield> t = field->bitfield_element;
 	for (int i = 0; i < t.size(); i++)
-		fout << _correct_var_name(t[i].name) << " = 0x"<< std::hex<<(int)(t[i].index) << ",\n";
+		fout << _correct_var_name(t[i].name) << " = "<< std::dec<<(int)(t[i].index) << ",\n";
 	fout << "};\n";
 
 	fout << "Blam::Cache::DataTypes::Bitfield" << p << "<" << _correct_var_name(field->name) << "> " << _correct_var_name(field->name) << ";";	
@@ -202,7 +221,7 @@ void _dump_enum(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 	fout << "{\n";
 	std::vector<_enum> t = field->enum_elements;
 	for (int i = 0; i < t.size(); i++)
-		fout << _correct_var_name(t[i].name) << " = 0x" << std::hex<<t[i].value << ",\n";
+		fout << _correct_var_name(t[i].name) << " = " << std::dec<<t[i].value << ",\n";
 	fout << "};\n";
 
 	fout << _correct_var_name(field->name) << " " << _correct_var_name(field->name) << ";";
@@ -327,6 +346,18 @@ void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream&
 			fout << "unsigned __int32 " << _correct_var_name(t->name) << ";";
 			offset += 4;
 			break;
+		case field_type::colorf:
+			if (t->colorfomat == "rgb")
+			{
+				fout << "Blam::Maths::Real::ColorRGB " << _correct_var_name(t->name) << ";";
+				offset += 12;
+			}
+			else if (t->colorfomat == "argb")
+			{
+				fout << "Blam::Maths::Real::ColorARGB " << _correct_var_name(t->name) << ";";
+				offset += 16;
+			}
+			break;
 		}
 		fout << "//0x" << std::uppercase<<std::hex<<curr_offset << '\n';
 	}
@@ -357,7 +388,7 @@ void _write_padding(int pad_size, std::ofstream& file)
 std::string _correct_var_name(std::string name)
 {
 	//Remove Unintended Characters and Add Style
-	char ignore_list[] = {'-','(',')','!','<','>','?'};
+	char ignore_list[] = {'-','(',')','!','<','>','?',',','.'};
 	std::string temp = "";
 	int i = 0;
 	name[0] = std::toupper(name[0]); //Capitalise First Letter

@@ -11,6 +11,11 @@ namespace Blam
 		{
 			namespace Foot
 			{
+				/*********************************************************************
+				* name:
+				* group_tag : Foot
+				* header size : 8
+				* *********************************************************************/
 				struct Foot
 				{
 					struct Effects
@@ -23,9 +28,9 @@ namespace Blam
 							__int16 GlobalMaterialIndex;//0x14
 							enum class SweetenerMode : __int8
 							{
-								SweetenerDefault = 0x0,
-								SweetenerEnabled = 0x1,
-								SweetenerDisabled = 0x2,
+								SweetenerDefault = 0,
+								SweetenerEnabled = 1,
+								SweetenerDisabled = 2,
 							};
 							SweetenerMode SweetenerMode;//0x16
 							__int8 Unknown;//0x17
@@ -40,9 +45,9 @@ namespace Blam
 							__int16 GlobalMaterialIndex;//0x14
 							enum class SweetenerMode : __int8
 							{
-								SweetenerDefault = 0x0,
-								SweetenerEnabled = 0x1,
-								SweetenerDisabled = 0x2,
+								SweetenerDefault = 0,
+								SweetenerEnabled = 1,
+								SweetenerDisabled = 2,
 							};
 							SweetenerMode SweetenerMode;//0x16
 							__int8 Unknown;//0x17
@@ -57,9 +62,9 @@ namespace Blam
 							__int16 GlobalMaterialIndex;//0x14
 							enum class SweetenerMode : __int8
 							{
-								SweetenerDefault = 0x0,
-								SweetenerEnabled = 0x1,
-								SweetenerDisabled = 0x2,
+								SweetenerDefault = 0,
+								SweetenerEnabled = 1,
+								SweetenerDisabled = 2,
 							};
 							SweetenerMode SweetenerMode;//0x16
 							__int8 Unknown;//0x17

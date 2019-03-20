@@ -11,20 +11,25 @@ namespace Blam
 		{
 			namespace Matg
 			{
+				/*********************************************************************
+				* name:
+				* group_tag : Matg
+				* header size : 644
+				* *********************************************************************/
 				struct Matg
 				{
 					PAD(0xAC);//0x0
 					enum class Language : __int32
 					{
-						English = 0x0,
-						Japanese = 0x1,
-						German = 0x2,
-						French = 0x3,
-						Spanish = 0x4,
-						Italian = 0x5,
-						Korean = 0x6,
-						Chinese = 0x7,
-						Portuguese = 0x8,
+						English = 0,
+						Japanese = 1,
+						German = 2,
+						French = 3,
+						Spanish = 4,
+						Italian = 5,
+						Korean = 6,
+						Chinese = 7,
+						Portuguese = 8,
 					};
 					Language Language;//0xAC
 					struct HavokCleanupResources
@@ -366,7 +371,7 @@ namespace Blam
 						Blam::Cache::DataTypes::tagRef GlobalShader;//0xCC
 						enum class Flags : __int16
 						{
-							TintEdgeDensity = 0x0,
+							TintEdgeDensity = 0,
 						};
 						Blam::Cache::DataTypes::Bitfield16<Flags> Flags;//0xD4
 						__int16 Unknown;//0xD6
@@ -545,45 +550,45 @@ namespace Blam
 						__int16 Unknown;//0x8
 						enum class Flags : __int16
 						{
-							Flammable = 0x0,
-							Biomass = 0x1,
+							Flammable = 0,
+							Biomass = 1,
 						};
 						Blam::Cache::DataTypes::Bitfield16<Flags> Flags;//0xA
 						enum class OldMaterialType : __int16
 						{
-							Dirt = 0x0,
-							Sand = 0x1,
-							Stone = 0x2,
-							Snow = 0x3,
-							Wood = 0x4,
-							MetalHollow = 0x5,
-							MetalThin = 0x6,
-							MetalThick = 0x7,
-							Rubber = 0x8,
-							Glass = 0x9,
-							ForceField = 0xA,
-							Grunt = 0xB,
-							HunterArmor = 0xC,
-							HunterSkin = 0xD,
-							Elite = 0xE,
-							Jackal = 0xF,
-							JackalEnergyShield = 0x10,
-							EngineerSkin = 0x11,
-							EngineerForceField = 0x12,
-							FloodCombatForm = 0x13,
-							FloodCarrierForm = 0x14,
-							CyborgArmor = 0x15,
-							CyborgEnergyShield = 0x16,
-							HumanArmor = 0x17,
-							HumanSkin = 0x18,
-							Sentinel = 0x19,
-							Monitor = 0x1A,
-							Plastic = 0x1B,
-							Water = 0x1C,
-							Leaves = 0x1D,
-							EliteEnergyShield = 0x1E,
-							Ice = 0x1F,
-							HunterShield = 0x20,
+							Dirt = 0,
+							Sand = 1,
+							Stone = 2,
+							Snow = 3,
+							Wood = 4,
+							MetalHollow = 5,
+							MetalThin = 6,
+							MetalThick = 7,
+							Rubber = 8,
+							Glass = 9,
+							ForceField = 10,
+							Grunt = 11,
+							HunterArmor = 12,
+							HunterSkin = 13,
+							Elite = 14,
+							Jackal = 15,
+							JackalEnergyShield = 16,
+							EngineerSkin = 17,
+							EngineerForceField = 18,
+							FloodCombatForm = 19,
+							FloodCarrierForm = 20,
+							CyborgArmor = 21,
+							CyborgEnergyShield = 22,
+							HumanArmor = 23,
+							HumanSkin = 24,
+							Sentinel = 25,
+							Monitor = 26,
+							Plastic = 27,
+							Water = 28,
+							Leaves = 29,
+							EliteEnergyShield = 30,
+							Ice = 31,
+							HunterShield = 32,
 						};
 						OldMaterialType OldMaterialType;//0xC
 						__int16 Unknown;//0xE
@@ -611,20 +616,20 @@ namespace Blam
 						Blam::Cache::DataTypes::tagRef Unknown;//0xA0
 						enum class SweetenerInheritanceFlags : __int32
 						{
-							SoundSmall = 0x0,
-							SoundMedium = 0x1,
-							SoundLarge = 0x2,
-							SoundRolling = 0x3,
-							SoundGrinding = 0x4,
-							SoundMelee = 0x4,
-							Bit5 = 0x5,
-							EffectSmall = 0x6,
-							EffectMedium = 0x7,
-							EffectLarge = 0x8,
-							EffectRolling = 0x9,
-							EffectGrinding = 0x10,
-							EffectMelee = 0x11,
-							Bit12 = 0x5,
+							SoundSmall = 0,
+							SoundMedium = 1,
+							SoundLarge = 2,
+							SoundRolling = 3,
+							SoundGrinding = 4,
+							SoundMelee = 4,
+							Bit5 = 5,
+							EffectSmall = 6,
+							EffectMedium = 7,
+							EffectLarge = 8,
+							EffectRolling = 9,
+							EffectGrinding = 10,
+							EffectMelee = 11,
+							Bit12 = 5,
 						};
 						Blam::Cache::DataTypes::Bitfield32<SweetenerInheritanceFlags> SweetenerInheritanceFlags;//0xA8
 						Blam::Cache::DataTypes::tagRef MaterialEffects;//0xAC
@@ -636,13 +641,13 @@ namespace Blam
 						Blam::Cache::DataTypes::tagRef RandomPlayerNames;//0x0
 						struct ObsoleteProfileColors
 						{
-							PAD(0xC);//0x0
+							Blam::Maths::Real::ColorRGB Color;//0x0
 						};
 						TAG_BLOCK_SIZE_ASSERT(ObsoleteProfileColors, 0xC);
 						Blam::Cache::DataTypes::Reflexive<ObsoleteProfileColors> ObsoleteProfileColors;//0x8
 						struct TeamColors
 						{
-							PAD(0xC);//0x0
+							Blam::Maths::Real::ColorRGB Color;//0x0
 						};
 						TAG_BLOCK_SIZE_ASSERT(TeamColors, 0xC);
 						Blam::Cache::DataTypes::Reflexive<TeamColors> TeamColors;//0x10
@@ -652,7 +657,7 @@ namespace Blam
 					Blam::Cache::DataTypes::Reflexive<MultiplayerUI> MultiplayerUI;//0x158
 					struct ProfileColors
 					{
-						PAD(0xC);//0x0
+						Blam::Maths::Real::ColorRGB Color;//0x0
 					};
 					TAG_BLOCK_SIZE_ASSERT(ProfileColors, 0xC);
 					Blam::Cache::DataTypes::Reflexive<ProfileColors> ProfileColors;//0x160
@@ -748,7 +753,7 @@ namespace Blam
 							__int32 SortOrder;//0xC4C
 							enum class Flags : __int8
 							{
-								Unlockable = 0x1,
+								Unlockable = 1,
 							};
 							Blam::Cache::DataTypes::Bitfield8<Flags> Flags;//0xC50
 							__int8 Unknown;//0xC51

@@ -258,6 +258,17 @@ namespace struct_generator
 
 			parent_field_list.push_back(child_field);
 			}
+			else if (element_name == "colorf" || element_name=="colourf")
+			{
+			std::shared_ptr<_plugin_field> child_field = std::make_shared<_plugin_field>();
+
+			child_field->name = child_element->Attribute("name");
+			child_field->type = field_type::colorf;
+			child_field->offset = std::stoul(child_element->Attribute("offset"), nullptr, 16);
+			child_field->colorfomat = child_element->Attribute("format");
+
+			parent_field_list.push_back(child_field);
+			}
 
 			child_element = child_element->NextSiblingElement();
 		}
@@ -269,8 +280,12 @@ namespace struct_generator
 			_enum t;
 
 			t.name = child_element->Attribute("name");
-			t.value = std::stoul(child_element->Attribute("value"), nullptr, 16);
-
+			std::string value = child_element->Attribute("value");
+			if (value.find("0x") != -1)
+				t.value = std::stoul(value, nullptr, 16);
+			else
+				t.value = std::stoul(value, nullptr, 10);
+			
 			enum_elements.push_back(t);
 
 			child_element = child_element->NextSiblingElement();
@@ -283,7 +298,11 @@ namespace struct_generator
 			_bitfield t;
 
 			t.name = child_element->Attribute("name");
-			t.index = std::stoul(child_element->Attribute("index"), nullptr, 16);
+			std::string value = child_element->Attribute("index");
+			if(value.find("0x")!=-1)
+				t.index = std::stoul(value, nullptr, 16);
+			else
+				t.index = std::stoul(value, nullptr, 10);
 
 			bitfield_element.push_back(t);
 

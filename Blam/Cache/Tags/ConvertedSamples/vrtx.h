@@ -11,12 +11,17 @@ namespace Blam
 		{
 			namespace Vrtx
 			{
+				/*********************************************************************
+				* name:
+				* group_tag : Vrtx
+				* header size : 16
+				* *********************************************************************/
 				struct Vrtx
 				{
 					enum class PlatformType : __int8
 					{
-						PC = 0x0,
-						XBOX = 0x1,
+						PC = 0,
+						XBOX = 1,
 					};
 					PlatformType PlatformType;//0x0
 					PAD(0x3);//0x1

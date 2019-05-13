@@ -3,6 +3,7 @@
 #include "..\Header Files\_dump_c_struct.h"
 #include <cctype>
 
+
 void _dump_tag_struct(tag_struct* tag)
 {
 	char dir_loc[256];
@@ -17,8 +18,8 @@ void _dump_tag_struct(tag_struct* tag)
 	std::ofstream fout(output_loc.c_str());
 
 	fout << "#pragma once\n";
-	fout << "#include\"DataTypes.h\"\n";
-	fout << "#include\"tag_block_assert.h\"\n\n\n";
+	fout << "#include\"..\\..\\DataTypes\\DataTypes.h\"\n";
+	fout << "#include\"..\\..\\tag_block_assert.h\"\n\n\n";
 	fout << "namespace Blam\n{\nnamespace Cache\n{\nnamespace Tags\n{\n";
 	fout << "namespace " + _correct_var_name(tag->name.substr(0, tag->name.rfind('.'))) + "\n{\n";
 	
@@ -159,6 +160,10 @@ void _dump_tag_struct(tag_struct* tag)
 				offset += 16;
 			}	
 			break;
+		case field_type::angle:
+			fout << "Blam::Maths::Real::Angle " << _correct_var_name(t->name) << ";";
+			offset += 4;
+			break;		
 		}
 		fout << "//0x" << std::uppercase<<std::hex << curr_offset << '\n';
 	}
@@ -358,6 +363,10 @@ void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream&
 				offset += 16;
 			}
 			break;
+		case field_type::angle:
+			fout << "Blam::Maths::Real::Angle " << _correct_var_name(t->name) << ";";
+			offset += 4;
+			break;		
 		}
 		fout << "//0x" << std::uppercase<<std::hex<<curr_offset << '\n';
 	}
@@ -388,7 +397,7 @@ void _write_padding(int pad_size, std::ofstream& file)
 std::string _correct_var_name(std::string name)
 {
 	//Remove Unintended Characters and Add Style
-	char ignore_list[] = {'-','(',')','!','<','>','?',',','.'};
+	char ignore_list[] = {'-','(',')','!','<','>','?',',','.','\'','\"'};
 	std::string temp = "";
 	int i = 0;
 	name[0] = std::toupper(name[0]); //Capitalise First Letter

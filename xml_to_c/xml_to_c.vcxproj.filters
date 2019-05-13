@@ -34,6 +34,9 @@
     <Filter Include="Blam\Cache\Tags\ConvertedSamples">
       <UniqueIdentifier>{615abbf4-7e81-4cec-a778-2fa1cc07b09f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Blam\Maths">
+      <UniqueIdentifier>{b41d5f34-7918-439e-95df-df37d7f852b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header Files\tinyxml2.h">
@@ -110,6 +113,45 @@
     </ClInclude>
     <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\matg.h">
       <Filter>Blam\Cache\Tags\ConvertedSamples</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\scnr.h">
+      <Filter>Blam\Cache\Tags\ConvertedSamples</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Maths\Angle.h">
+      <Filter>Blam\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Maths\ColorARGB.h">
+      <Filter>Blam\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Maths\ColorRGB.h">
+      <Filter>Blam\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Maths\Maths.h">
+      <Filter>Blam\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Maths\Point2D.h">
+      <Filter>Blam\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Maths\Point3D.h">
+      <Filter>Blam\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Maths\RealColorARGB.h">
+      <Filter>Blam\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Maths\RealColorRGB.h">
+      <Filter>Blam\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Maths\RealPoint2D.h">
+      <Filter>Blam\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Maths\RealPoint3D.h">
+      <Filter>Blam\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Maths\RealVector2D.h">
+      <Filter>Blam\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Blam\Maths\RealVector3D.h">
+      <Filter>Blam\Maths</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

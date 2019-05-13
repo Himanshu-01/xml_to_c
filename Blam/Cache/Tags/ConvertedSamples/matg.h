@@ -1,8 +1,7 @@
 #pragma once
-#include"DataTypes.h"
-#include"tag_block_assert.h"
-
-
+#include"..\..\DataTypes\DataTypes.h"
+#include"..\..\tag_block_assert.h"
+#include"..\..\..\Maths\Maths.h"
 namespace Blam
 {
 	namespace Cache
@@ -184,7 +183,7 @@ namespace Blam
 						float GravityScale;//0x68
 						__int16 Unknown;//0x6C
 						__int16 MinimumAutolevelingTicks;//0x6E
-						PAD(0x4);//0x70
+						Blam::Maths::Real::Angle MinimumAngleForVehicleFlipping;//0x70
 						struct LookFunction
 						{
 							float Scale;//0x0

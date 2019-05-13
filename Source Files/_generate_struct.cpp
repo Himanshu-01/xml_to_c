@@ -53,7 +53,7 @@ namespace struct_generator
 			}
 			else if ((element_name == "tagRef") || (element_name == "tagref"))
 			{
-				if (!child_element->BoolAttribute("withClass"))
+				if (!child_element->Attribute("withClass"))
 				{
 					std::shared_ptr<_plugin_field> child_field = std::make_shared<_plugin_field>();
 
@@ -243,7 +243,11 @@ namespace struct_generator
 			child_field->name = child_element->Attribute("name");
 			child_field->type = field_type::type_ascii;
 			child_field->offset = std::stoul(child_element->Attribute("offset"), nullptr, 16);
-			child_field->string_size = std::stoul(child_element->Attribute("size"), nullptr, 16);
+			if(child_element->Attribute("size"))
+				child_field->string_size = std::stoul(child_element->Attribute("size"), nullptr, 16);
+			else
+				child_field->string_size = std::stoul(child_element->Attribute("length"), nullptr, 16);
+
 
 			parent_field_list.push_back(child_field);
 			}
@@ -254,7 +258,10 @@ namespace struct_generator
 			child_field->name = child_element->Attribute("name");
 			child_field->type = field_type::type_utf16;
 			child_field->offset = std::stoul(child_element->Attribute("offset"), nullptr, 16);
-			child_field->string_size = std::stoul(child_element->Attribute("size"), nullptr, 16);
+			if (child_element->Attribute("size"))
+				child_field->string_size = std::stoul(child_element->Attribute("size"), nullptr, 16);
+			else
+				child_field->string_size = std::stoul(child_element->Attribute("length"), nullptr, 16);
 
 			parent_field_list.push_back(child_field);
 			}
@@ -269,6 +276,16 @@ namespace struct_generator
 
 			parent_field_list.push_back(child_field);
 			}
+			else if (element_name == "degree")
+			{
+			std::shared_ptr<_plugin_field> child_field = std::make_shared<_plugin_field>();
+
+			child_field->name = child_element->Attribute("name");
+			child_field->type = field_type::angle;
+			child_field->offset = std::stoul(child_element->Attribute("offset"), nullptr, 16);
+
+			parent_field_list.push_back(child_field);
+			}			
 
 			child_element = child_element->NextSiblingElement();
 		}

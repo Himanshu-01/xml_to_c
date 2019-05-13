@@ -1,6 +1,6 @@
 #pragma once
-#include"DataTypes.h"
-#include"tag_block_assert.h"
+#include"..\..\DataTypes\DataTypes.h"
+#include"..\..\tag_block_assert.h"
 
 
 namespace Blam

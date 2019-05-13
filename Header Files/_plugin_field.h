@@ -27,6 +27,7 @@ meta==compiled tag
 		bitfield16,
 		bitfield32,
 		colorf,
+		angle,		
 
 		//primitive types
 		type_int8,

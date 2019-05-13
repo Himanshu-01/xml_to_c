@@ -1,7 +1,7 @@
 #pragma once
-#include"DataTypes.h"
-#include"tag_block_assert.h"
-
+#include"..\..\DataTypes\DataTypes.h"
+#include"..\..\tag_block_assert.h"
+#include"..\..\..\Maths\Maths.h"
 
 namespace Blam
 {
@@ -41,7 +41,7 @@ namespace Blam
 						float LightmapBrightnessOffset;//0x4
 						Blam::Maths::Real::ColorRGB PrimaryMinLightmapColor;//0x8
 						Blam::Maths::Real::ColorRGB PrimaryMaxLightmapColor;//0x14
-						PAD(0x4);//0x20
+						Blam::Maths::Real::Angle ExclusionAngleFromUp;//0x20
 						Blam::Cache::DataTypes::dataRef PrimaryLightFunction;//0x24
 						float SecondaryMinLightmapColorR;//0x2C
 						float SecondaryMinLightmapColorG;//0x30

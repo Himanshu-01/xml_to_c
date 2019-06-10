@@ -153,6 +153,9 @@
     <ClInclude Include="..\Blam\Maths\RealVector3D.h">
       <Filter>Blam\Maths</Filter>
     </ClInclude>
+    <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\mode.h">
+      <Filter>Blam\Cache\Tags\ConvertedSamples</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source Files\_dump_c_struct.cpp">

@@ -183,6 +183,7 @@ void _dump_tag_struct(tag_struct* tag)
 }
 void _dump_bitfield(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 {
+	/*
 	fout << "enum class " << _correct_var_name(field->name) << " : ";
 	std::string p;
 	switch (field->type)
@@ -207,6 +208,21 @@ void _dump_bitfield(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 	fout << "};\n";
 
 	fout << "Blam::Cache::DataTypes::Bitfield" << p << "<" << _correct_var_name(field->name) << "> " << _correct_var_name(field->name) << ";";	
+	*/
+	fout << "struct " << _correct_var_name(field->name) << "\n{\n";
+	for (int i = 0; i < (int)field->type; i++)
+	{
+		///we got an indexx with a name
+		if (i == field->bitfield_element[i].index)
+			fout << field->bitfield_element[i].index << " : 1;\n";
+		else fout << "bit" << i << " : 1;\n";
+			
+		
+		//reached the last element
+		if (i == field->bitfield_element[field->bitfield_element.size() - 1].index)
+			break;
+	}
+	fout << "}" << _correct_var_name(field->name) << ";\n";
 }
 void _dump_enum(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 {

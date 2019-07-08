@@ -21,10 +21,11 @@ void _dump_tag_struct(tag_struct* tag)
 	fout << "#include\"..\\..\\DataTypes\\DataTypes.h\"\n";
 	fout << "#include\"..\\..\\tag_block_assert.h\"\n\n\n";
 	fout << "namespace Blam\n{\nnamespace Cache\n{\nnamespace Tags\n{\n";
-	fout << "namespace " + _correct_var_name(tag->name.substr(0, tag->name.rfind('.'))) + "\n{\n";
+
 	
 
 	std::string struct_name = _correct_var_name(tag->name.substr(0, tag->name.rfind('.')));
+	struct_name[0] = std::tolower(struct_name[0]);//lower the tag_name
 
 	fout << "\t\t/********************************************************************* \n\
 		* name: \n\
@@ -177,7 +178,7 @@ void _dump_tag_struct(tag_struct* tag)
 	fout << "};\n";
 	fout << "TAG_BLOCK_SIZE_ASSERT(" << struct_name << ",0x" << std::uppercase<<std::hex<< tag->base_size << ");\n";
 
-	fout << "}\n}\n}\n}\n";
+	fout << "}\n}\n}\n";
 	
 	fout.close();
 }
@@ -213,16 +214,31 @@ void _dump_bitfield(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 	for (int i = 0; i < (int)field->type; i++)
 	{
 		///we got an indexx with a name
-		if (i == field->bitfield_element[i].index)
-			fout << field->bitfield_element[i].index << " : 1;\n";
-		else fout << "bit" << i << " : 1;\n";
+		if (i < field->bitfield_element.size() && (i == field->bitfield_element[i].index))
+			fout << "unsigned char " << _correct_var_name(field->bitfield_element[i].name) << " : 1;\n";
+		else fout << "unsigned char bit" <<std::dec<< i << " : 1;\n";
 			
 		
 		//reached the last element
-		if (i == field->bitfield_element[field->bitfield_element.size() - 1].index)
-			break;
+		//if (i == field->bitfield_element[field->bitfield_element.size() - 1].index)
+			//break;
 	}
 	fout << "}" << _correct_var_name(field->name) << ";\n";
+
+	fout << "TAG_BLOCK_SIZE_ASSERT(" << _correct_var_name(field->name) << ',';
+	switch (field->type)
+	{
+	case field_type::bitfield8:
+		fout << "0x1);\n";
+		break;
+	case field_type::bitfield16:
+		fout << "0x2);\n";
+		break;
+	case field_type::bitfield32:
+		fout << "0x4);\n";
+		break;
+	default:;
+	}
 }
 void _dump_enum(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 {
@@ -413,7 +429,7 @@ void _write_padding(int pad_size, std::ofstream& file)
 std::string _correct_var_name(std::string name)
 {
 	//Remove Unintended Characters and Add Style
-	char ignore_list[] = {'-','(',')','!','<','>','?',',','.','\'','\"'};
+	char ignore_list[] = {'-','(',')','!','<','>','?',',','.','\'','\"','/'};
 	std::string temp = "";
 	int i = 0;
 	name[0] = std::toupper(name[0]); //Capitalise First Letter

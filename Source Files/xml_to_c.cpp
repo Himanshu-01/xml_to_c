@@ -6,7 +6,7 @@
 #include"..\Header Files\_generate_struct.h"
 #include"..\Header Files\_plugin_field.h"
 #include"..\Header Files\_dump_c_struct.h"
-
+//#include"..\Blam\Cache\Tags\ConvertedSamples\scnr.h"
 //#include"..\Blam\Cache\Tags\ConvertedSamples\ugh!.h"
 
 char* SharedMapBase;
@@ -14,12 +14,16 @@ char* SharedMapBase;
 int main()
 {
     std::cout << "Hello World!\n";
-	tag_struct* temp = struct_generator::_generate_tag_struct("C:\\Users\\asus\\Desktop\\test\\ugh!.xml");
+	tag_struct* temp = struct_generator::_generate_tag_struct("C:\\Users\\asus\\Desktop\\test\\vrtx.xml");
 	_dump_tag_struct(temp);
 	
 	getchar();
 }
+void test()
+{
 
+
+}
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
 

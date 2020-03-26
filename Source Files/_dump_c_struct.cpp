@@ -2,16 +2,17 @@
 #include <Windows.h>
 #include "..\Header Files\_dump_c_struct.h"
 #include <cctype>
+#include <algorithm>
 
 
 void _dump_tag_struct(tag_struct* tag)
 {
 	char dir_loc[256];
 	GetCurrentDirectoryA(256, dir_loc);
-	std::string output_loc = dir_loc;    
-	output_loc=output_loc.substr(0,output_loc.find_last_of("\\"));
-	output_loc += "\\Blam\\Cache\\Tags\\ConvertedSamples";
-	output_loc+= '\\' + tag->name;
+	std::string output_loc = dir_loc;
+	output_loc = output_loc.substr(0, output_loc.find_last_of("\\"));
+	//output_loc += "dump\\";
+	output_loc += '\\' + tag->name;
 	output_loc.erase(output_loc.rfind('.'));
 	output_loc += ".h";
 
@@ -20,31 +21,31 @@ void _dump_tag_struct(tag_struct* tag)
 	fout << "#pragma once\n";
 	fout << "#include\"..\\..\\DataTypes\\DataTypes.h\"\n";
 	fout << "#include\"..\\..\\tag_block_assert.h\"\n\n\n";
-	fout << "namespace Blam\n{\nnamespace Cache\n{\nnamespace Tags\n{\n";
 
-	
+
+
 
 	std::string struct_name = _correct_var_name(tag->name.substr(0, tag->name.rfind('.')));
 	struct_name[0] = std::tolower(struct_name[0]);//lower the tag_name
 
 	fout << "\t\t/********************************************************************* \n\
 		* name: \n\
-		* group_tag : "<<struct_name<<"\n \
-		* header size : "<<tag->base_size<<"\n\
+		* group_tag : " << struct_name << "\n \
+		* header size : " << tag->base_size << "\n\
 		* *********************************************************************/ \n";
 
-	fout << "struct " + struct_name + "\n{\n";
-	int offset = 0x0;	
+	fout << "struct s_" + struct_name + "\n{\n";
+	int offset = 0x0;
 	for (int i = 0; i < tag->child_fields.size(); i++)
 	{
 		int curr_offset = offset;
 		std::shared_ptr<_plugin_field> t = tag->child_fields[i];
 		if (offset != t->offset)
-		{			
+		{
 			_write_padding(t->offset - offset, fout);
-			fout << "//0x" << std::uppercase<<std::hex << curr_offset << '\n';
-			curr_offset=offset = t->offset;
-		}		
+			fout << "//0x" << std::uppercase << std::hex << curr_offset << '\n';
+			curr_offset = offset = t->offset;
+		}
 		switch (t->type)
 		{
 		case field_type::bitfield8:
@@ -72,19 +73,19 @@ void _dump_tag_struct(tag_struct* tag)
 			offset += 4;
 			break;
 		case field_type::data_ref:
-			fout << "Blam::Cache::DataTypes::dataRef " << _correct_var_name(t->name) << ";";
+			fout << "data_block " << _correct_var_name(t->name) << ";";
 			offset += 8;
 			break;
 		case field_type::tag_ref:
-			fout << "Blam::Cache::DataTypes::tagRef " << _correct_var_name(t->name) << ";";
+			fout << "tag_reference " << _correct_var_name(t->name) << ";";
 			offset += 8;
 			break;
 		case field_type::WC_tag_ref:
-			fout << "Blam::Cache::DataTypes::tagRefN " << _correct_var_name(t->name) << ";";
+			fout << "tag_referenceN " << _correct_var_name(t->name) << ";";
 			offset += 4;
 			break;
 		case field_type::string_ID:
-			fout << "Blam::Cache::DataTypes::StringID " << _correct_var_name(t->name) << ";";
+			fout << "string_id " << _correct_var_name(t->name) << ";";
 			offset += 4;
 			break;
 		case field_type::tag_block:
@@ -93,31 +94,31 @@ void _dump_tag_struct(tag_struct* tag)
 			break;
 		case field_type::type_ascii:
 			if (t->string_size == 32)
-				fout << "Blam::Cache::DataTypes::String32 " << _correct_var_name(t->name) << ";";
+				fout << "string32 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size == 64)
-				fout << "Blam::Cache::DataTypes::String64 " << _correct_var_name(t->name) << ";";
+				fout << "string64 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size == 128)
-				fout << "Blam::Cache::DataTypes::String128 " << _correct_var_name(t->name) << ";";
+				fout << "string128 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size == 256)
-				fout << "Blam::Cache::DataTypes::String256 " << _correct_var_name(t->name) << ";";
+				fout << "string256 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size == 512)
-				fout << "Blam::Cache::DataTypes::String512 " << _correct_var_name(t->name) << ";";
+				fout << "string512 " << _correct_var_name(t->name) << ";";
 			else
-				fout << "Blam::Cache::DataTypes::String<" << t->string_size << "> " << _correct_var_name(t->name) << ";";
+				fout << "string<" << t->string_size << "> " << _correct_var_name(t->name) << ";";
 
 			offset += t->string_size;
 			break;
 		case field_type::type_utf16:
 			if (t->string_size / 2 == 32)
-				fout << "Blam::Cache::DataTypes::Unicode32 " << _correct_var_name(t->name) << ";";
+				fout << "unicode32 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size / 2 == 64)
-				fout << "Blam::Cache::DataTypes::Unicode64 " << _correct_var_name(t->name) << ";";
+				fout << "unicode64 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size / 2 == 128)
-				fout << "Blam::Cache::DataTypes::Unicode128 " << _correct_var_name(t->name) << ";";
+				fout << "unicode128 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size / 2 == 256)
-				fout << "Blam::Cache::DataTypes::Unicode256 " << _correct_var_name(t->name) << ";";
+				fout << "unicode256 " << _correct_var_name(t->name) << ";";
 			else
-				fout << "Blam::Cache::DataTypes::Unicode<" << t->string_size / 2 << "> " << _correct_var_name(t->name) << ";";
+				fout << "unicode<" << t->string_size / 2 << "> " << _correct_var_name(t->name) << ";";
 
 			offset += t->string_size;
 			break;
@@ -152,40 +153,37 @@ void _dump_tag_struct(tag_struct* tag)
 		case field_type::colorf:
 			if (t->colorfomat == "rgb")
 			{
-				fout << "Blam::Maths::Real::ColorRGB " << _correct_var_name(t->name) << ";";
+				fout << "real_color_rgb " << _correct_var_name(t->name) << ";";
 				offset += 12;
 			}
 			else if (t->colorfomat == "argb")
 			{
-				fout << "Blam::Maths::Real::ColorARGB " << _correct_var_name(t->name) << ";";
+				fout << "real_color_argb " << _correct_var_name(t->name) << ";";
 				offset += 16;
-			}	
+			}
 			break;
 		case field_type::angle:
-			fout << "Blam::Maths::Real::Angle " << _correct_var_name(t->name) << ";";
+			fout << "angle " << _correct_var_name(t->name) << ";";
 			offset += 4;
-			break;		
+			break;
 		}
-		fout << "//0x" << std::uppercase<<std::hex << curr_offset << '\n';
+		fout << "//0x" << std::uppercase << std::hex << curr_offset << '\n';
 	}
 	if (tag->base_size != offset)
 	{
 		//requires padding		
 		_write_padding(tag->base_size - offset, fout);
-		fout << "//0x" << std::uppercase<<std::hex << offset << '\n';
+		fout << "//0x" << std::uppercase << std::hex << offset << '\n';
 		offset = tag->base_size;
 	}
 	fout << "};\n";
-	fout << "TAG_BLOCK_SIZE_ASSERT(" << struct_name << ",0x" << std::uppercase<<std::hex<< tag->base_size << ");\n";
-
-	fout << "}\n}\n}\n";
-	
+	fout << "TAG_BLOCK_SIZE_ASSERT(s_" << struct_name << ",0x" << std::uppercase << std::hex << tag->base_size << ");\n";
 	fout.close();
 }
 void _dump_bitfield(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 {
-	/*
-	fout << "enum class " << _correct_var_name(field->name) << " : ";
+
+	fout << "enum class e_" << _correct_var_name(field->name) << " : ";
 	std::string p;
 	switch (field->type)
 	{
@@ -204,21 +202,22 @@ void _dump_bitfield(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 	}
 	fout << "{\n";
 	std::vector<_bitfield> t = field->bitfield_element;
-	for (int i = 0; i < t.size(); i++)
-		fout << _correct_var_name(t[i].name) << " = "<< std::dec<<(int)(t[i].index) << ",\n";
+	for (int i = 0; i < t.size(); i++)		
+		fout << _correct_var_name(t[i].name) << " = " <<"FLAG("<< std::dec << (int)(t[i].index) << "),\n";
+	
 	fout << "};\n";
 
-	fout << "Blam::Cache::DataTypes::Bitfield" << p << "<" << _correct_var_name(field->name) << "> " << _correct_var_name(field->name) << ";";	
-	*/
-	fout << "struct " << _correct_var_name(field->name) << "\n{\n";
+	fout << "e_" << _correct_var_name(field->name) << " "<<_correct_var_name(field->name) << ";";
+
+	/*fout << "struct " << _correct_var_name(field->name) << "\n{\n";
 	for (int i = 0; i < (int)field->type; i++)
 	{
 		///we got an indexx with a name
 		if (i < field->bitfield_element.size() && (i == field->bitfield_element[i].index))
 			fout << "unsigned char " << _correct_var_name(field->bitfield_element[i].name) << " : 1;\n";
 		else fout << "unsigned char bit" <<std::dec<< i << " : 1;\n";
-			
-		
+
+
 		//reached the last element
 		//if (i == field->bitfield_element[field->bitfield_element.size() - 1].index)
 			//break;
@@ -238,11 +237,11 @@ void _dump_bitfield(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 		fout << "0x4);\n";
 		break;
 	default:;
-	}
+	}*/
 }
 void _dump_enum(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 {
-	fout << "enum class " << _correct_var_name(field->name) << " : ";
+	fout << "enum class e_" << _correct_var_name(field->name) << " : ";
 	switch (field->type)
 	{
 	case field_type::enum8:
@@ -258,27 +257,27 @@ void _dump_enum(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 	fout << "{\n";
 	std::vector<_enum> t = field->enum_elements;
 	for (int i = 0; i < t.size(); i++)
-		fout << _correct_var_name(t[i].name) << " = " << std::dec<<t[i].value << ",\n";
+		fout << _correct_var_name(t[i].name) << " = " << std::dec << t[i].value << ",\n";
 	fout << "};\n";
 
-	fout << _correct_var_name(field->name) << " " << _correct_var_name(field->name) << ";";
+	fout << "e_" << _correct_var_name(field->name) << " " << _correct_var_name(field->name) << ";";
 }
 void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
-{	
+{
 	std::string struct_name = _correct_var_name(field->name);
-	fout << "struct " + struct_name + "\n{\n";
+	fout << "struct s_" + struct_name + "\n{\n";
 	int offset = 0x0;
-	
+
 	for (int i = 0; i < field->child_fields.size(); i++)
 	{
 		int curr_offset = offset;
 		std::shared_ptr<_plugin_field> t = field->child_fields[i];
 		if (offset != t->offset)
-		{			
+		{
 			_write_padding(t->offset - offset, fout);
-			fout << "//0x" << std::uppercase<<std::hex << curr_offset << '\n';
-			curr_offset=offset = t->offset;
-		}		
+			fout << "//0x" << std::uppercase << std::hex << curr_offset << '\n';
+			curr_offset = offset = t->offset;
+		}
 		switch (t->type)
 		{
 		case field_type::bitfield8:
@@ -306,19 +305,19 @@ void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream&
 			offset += 4;
 			break;
 		case field_type::data_ref:
-			fout << "Blam::Cache::DataTypes::dataRef " << _correct_var_name(t->name) << ";";
+			fout << "data_block " << _correct_var_name(t->name) << ";";
 			offset += 8;
 			break;
 		case field_type::tag_ref:
-			fout << "Blam::Cache::DataTypes::tagRef " << _correct_var_name(t->name) << ";";
+			fout << "tag_reference " << _correct_var_name(t->name) << ";";
 			offset += 8;
 			break;
 		case field_type::WC_tag_ref:
-			fout << "Blam::Cache::DataTypes::tagRefN " << _correct_var_name(t->name) << ";";
+			fout << "tag_referenceN " << _correct_var_name(t->name) << ";";
 			offset += 4;
 			break;
 		case field_type::string_ID:
-			fout << "Blam::Cache::DataTypes::StringID " << _correct_var_name(t->name) << ";";
+			fout << "string_id " << _correct_var_name(t->name) << ";";
 			offset += 4;
 			break;
 		case field_type::tag_block:
@@ -327,31 +326,31 @@ void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream&
 			break;
 		case field_type::type_ascii:
 			if (t->string_size == 32)
-				fout << "Blam::Cache::DataTypes::String32 " << _correct_var_name(t->name) << ";";
+				fout << "string32 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size == 64)
-				fout << "Blam::Cache::DataTypes::String64 " << _correct_var_name(t->name) << ";";
+				fout << "string64 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size == 128)
-				fout << "Blam::Cache::DataTypes::String128 " << _correct_var_name(t->name) << ";";
+				fout << "string128 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size == 256)
-				fout << "Blam::Cache::DataTypes::String256 " << _correct_var_name(t->name) << ";";
+				fout << "string256 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size == 512)
-				fout << "Blam::Cache::DataTypes::String512 " << _correct_var_name(t->name) << ";";
+				fout << "string512 " << _correct_var_name(t->name) << ";";
 			else
-				fout << "Blam::Cache::DataTypes::String<" << t->string_size << "> " << _correct_var_name(t->name) << ";";
+				fout << "string<" << t->string_size << "> " << _correct_var_name(t->name) << ";";
 
 			offset += t->string_size;
 			break;
 		case field_type::type_utf16:
 			if (t->string_size / 2 == 32)
-				fout << "Blam::Cache::DataTypes::Unicode32 " << _correct_var_name(t->name) << ";";
+				fout << "unicode32 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size / 2 == 64)
-				fout << "Blam::Cache::DataTypes::Unicode64 " << _correct_var_name(t->name) << ";";
+				fout << "unicode64 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size / 2 == 128)
-				fout << "Blam::Cache::DataTypes::Unicode128 " << _correct_var_name(t->name) << ";";
+				fout << "unicode128 " << _correct_var_name(t->name) << ";";
 			else if (t->string_size / 2 == 256)
-				fout << "Blam::Cache::DataTypes::Unicode256 " << _correct_var_name(t->name) << ";";
+				fout << "unicode256 " << _correct_var_name(t->name) << ";";
 			else
-				fout << "Blam::Cache::DataTypes::Unicode<" << t->string_size / 2 << "> " << _correct_var_name(t->name) << ";";
+				fout << "unicode<" << t->string_size / 2 << "> " << _correct_var_name(t->name) << ";";
 
 			offset += t->string_size;
 			break;
@@ -386,21 +385,21 @@ void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream&
 		case field_type::colorf:
 			if (t->colorfomat == "rgb")
 			{
-				fout << "Blam::Maths::Real::ColorRGB " << _correct_var_name(t->name) << ";";
+				fout << "real_color_rgb " << _correct_var_name(t->name) << ";";
 				offset += 12;
 			}
 			else if (t->colorfomat == "argb")
 			{
-				fout << "Blam::Maths::Real::ColorARGB " << _correct_var_name(t->name) << ";";
+				fout << "real_color_argb " << _correct_var_name(t->name) << ";";
 				offset += 16;
 			}
 			break;
 		case field_type::angle:
-			fout << "Blam::Maths::Real::Angle " << _correct_var_name(t->name) << ";";
+			fout << "angle " << _correct_var_name(t->name) << ";";
 			offset += 4;
-			break;		
+			break;
 		}
-		fout << "//0x" << std::uppercase<<std::hex<<curr_offset << '\n';
+		fout << "//0x" << std::uppercase << std::hex << curr_offset << '\n';
 	}
 	if (field->block_size != offset)
 	{
@@ -410,8 +409,8 @@ void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream&
 		offset = field->block_size;
 	}
 	fout << "};\n";
-	fout << "TAG_BLOCK_SIZE_ASSERT(" << struct_name << ",0x" << std::hex<< field->block_size << ");\n";
-	fout << "Blam::Cache::DataTypes::Reflexive<" << struct_name << "> " << struct_name << ";";
+	fout << "TAG_BLOCK_SIZE_ASSERT(s_" << struct_name << ",0x" << std::hex << field->block_size << ");\n";
+	fout << "tag_block<s_" << struct_name << "> " << struct_name << ";";
 }
 void _write_padding(int pad_size, std::ofstream& file)
 {
@@ -421,13 +420,14 @@ void _write_padding(int pad_size, std::ofstream& file)
 	if (pad_size < 0)
 	{
 		file << "////	WARNING :: WRONG SIZE OF STRUCT OR OFFSETS	////PLZ Verify\n";
-		file << "PAD("<< std::dec << pad_size << ");";
+		file << "PAD(" << std::dec << pad_size << ");";
 	}
 	else
-		file << "PAD(0x"<<std::uppercase<<std::hex << pad_size<<");";
+		file << "PAD(0x" << std::uppercase << std::hex << pad_size << ");";
 }
 std::string _correct_var_name(std::string name)
 {
+	/*
 	//Remove Unintended Characters and Add Style
 	char ignore_list[] = {'-','(',')','!','<','>','?',',','.','\'','\"','/'};
 	std::string temp = "";
@@ -455,12 +455,45 @@ std::string _correct_var_name(std::string name)
 
 			name[i + 1] = std::toupper(name[i + 1]);//Capatalise Next Letter
 		}
-		
+
+		i++;
+	}
+	//Fix for First Character as Number
+	if (!std::isalpha(temp[0]))
+		temp = "NUM_" + temp;
+
+	return temp;
+	*/
+
+	//Remove Unintended Characters and Add Style
+	char ignore_list[] = { '-','(',')','!','<','>','?',',','.','\'','\"','/' };
+	std::string temp = "";
+	int i = 0;
+
+	std::transform(name.begin(), name.end(), name.begin(),
+		[](unsigned char c) { return std::tolower(c); });
+
+	while (name[i])
+	{
+		if (std::isblank(name[i]))
+			temp += "_";
+		else
+		{
+			bool k = false;
+			for (int j = 0; j < sizeof(ignore_list); j++)
+				if (name[i] == ignore_list[j])
+				{
+					k = true;
+					break;
+				}
+			if (!k)
+				temp += name[i];
+		}
 		i++;
 	}
 	//Fix for First Character as Number	
 	if (!std::isalpha(temp[0]))
 		temp = "NUM_" + temp;
-	
+
 	return temp;
 }

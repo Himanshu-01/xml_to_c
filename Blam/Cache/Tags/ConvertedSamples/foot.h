@@ -3,77 +3,68 @@
 #include"..\..\tag_block_assert.h"
 
 
-namespace Blam
+/*********************************************************************
+* name:
+* group_tag : foot
+* header size : 8
+* *********************************************************************/
+struct s_foot
 {
-	namespace Cache
+	struct s_effects
 	{
-		namespace Tags
+		struct s_old_materials
 		{
-			/*********************************************************************
-			* name:
-			* group_tag : foot
-			* header size : 8
-			* *********************************************************************/
-			struct foot
+			tag_reference effect;//0x0
+			tag_reference sound;//0x8
+			string_id material_name;//0x10
+			__int16 global_material_index;//0x14
+			enum class e_sweetener_mode : __int8
 			{
-				struct Effects
-				{
-					struct OldMaterials
-					{
-						Blam::Cache::DataTypes::tagRef Effect;//0x0
-						Blam::Cache::DataTypes::tagRef Sound;//0x8
-						Blam::Cache::DataTypes::StringID MaterialName;//0x10
-						__int16 GlobalMaterialIndex;//0x14
-						enum class SweetenerMode : __int8
-						{
-							SweetenerDefault = 0,
-							SweetenerEnabled = 1,
-							SweetenerDisabled = 2,
-						};
-						SweetenerMode SweetenerMode;//0x16
-						__int8 Unknown;//0x17
-					};
-					TAG_BLOCK_SIZE_ASSERT(OldMaterials, 0x18);
-					Blam::Cache::DataTypes::Reflexive<OldMaterials> OldMaterials;//0x0
-					struct Sounds
-					{
-						Blam::Cache::DataTypes::tagRef Tag;//0x0
-						Blam::Cache::DataTypes::tagRef SecondaryTag;//0x8
-						Blam::Cache::DataTypes::StringID MaterialName;//0x10
-						__int16 GlobalMaterialIndex;//0x14
-						enum class SweetenerMode : __int8
-						{
-							SweetenerDefault = 0,
-							SweetenerEnabled = 1,
-							SweetenerDisabled = 2,
-						};
-						SweetenerMode SweetenerMode;//0x16
-						__int8 Unknown;//0x17
-					};
-					TAG_BLOCK_SIZE_ASSERT(Sounds, 0x18);
-					Blam::Cache::DataTypes::Reflexive<Sounds> Sounds;//0x8
-					struct Effects
-					{
-						Blam::Cache::DataTypes::tagRef Tag;//0x0
-						Blam::Cache::DataTypes::tagRef SecondaryTag;//0x8
-						Blam::Cache::DataTypes::StringID MaterialName;//0x10
-						__int16 GlobalMaterialIndex;//0x14
-						enum class SweetenerMode : __int8
-						{
-							SweetenerDefault = 0,
-							SweetenerEnabled = 1,
-							SweetenerDisabled = 2,
-						};
-						SweetenerMode SweetenerMode;//0x16
-						__int8 Unknown;//0x17
-					};
-					TAG_BLOCK_SIZE_ASSERT(Effects, 0x18);
-					Blam::Cache::DataTypes::Reflexive<Effects> Effects;//0x10
-				};
-				TAG_BLOCK_SIZE_ASSERT(Effects, 0x18);
-				Blam::Cache::DataTypes::Reflexive<Effects> Effects;//0x0
+				sweetener_default = 0,
+				sweetener_enabled = 1,
+				sweetener_disabled = 2,
 			};
-			TAG_BLOCK_SIZE_ASSERT(foot, 0x8);
-		}
-	}
-}
+			e_sweetener_mode sweetener_mode;//0x16
+			__int8 unknown;//0x17
+		};
+		TAG_BLOCK_SIZE_ASSERT(s_old_materials, 0x18);
+		tag_block<s_old_materials> old_materials;//0x0
+		struct s_sounds
+		{
+			tag_reference tag;//0x0
+			tag_reference secondary_tag;//0x8
+			string_id material_name;//0x10
+			__int16 global_material_index;//0x14
+			enum class e_sweetener_mode : __int8
+			{
+				sweetener_default = 0,
+				sweetener_enabled = 1,
+				sweetener_disabled = 2,
+			};
+			e_sweetener_mode sweetener_mode;//0x16
+			__int8 unknown;//0x17
+		};
+		TAG_BLOCK_SIZE_ASSERT(s_sounds, 0x18);
+		tag_block<s_sounds> sounds;//0x8
+		struct s_effects
+		{
+			tag_reference tag;//0x0
+			tag_reference secondary_tag;//0x8
+			string_id material_name;//0x10
+			__int16 global_material_index;//0x14
+			enum class e_sweetener_mode : __int8
+			{
+				sweetener_default = 0,
+				sweetener_enabled = 1,
+				sweetener_disabled = 2,
+			};
+			e_sweetener_mode sweetener_mode;//0x16
+			__int8 unknown;//0x17
+		};
+		TAG_BLOCK_SIZE_ASSERT(s_effects, 0x18);
+		tag_block<s_effects> effects;//0x10
+	};
+	TAG_BLOCK_SIZE_ASSERT(s_effects, 0x18);
+	tag_block<s_effects> effects;//0x0
+};
+TAG_BLOCK_SIZE_ASSERT(s_foot, 0x8);

@@ -156,6 +156,9 @@
     <ClInclude Include="..\Blam\Cache\Tags\ConvertedSamples\mode.h">
       <Filter>Blam\Cache\Tags\ConvertedSamples</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header Files\tag_group_names.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source Files\_dump_c_struct.cpp">

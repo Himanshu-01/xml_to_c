@@ -2,19 +2,27 @@
 #include <Windows.h>
 #include "..\Header Files\_dump_c_struct.h"
 #include <cctype>
-#include <algorithm>
-
+#include "..\Header Files\tag_group_names.h"
+#include <algorithm> 
 
 void _dump_tag_struct(tag_struct* tag)
 {
 	char dir_loc[256];
 	GetCurrentDirectoryA(256, dir_loc);
-	std::string output_loc = dir_loc;
-	output_loc = output_loc.substr(0, output_loc.find_last_of("\\"));
-	//output_loc += "dump\\";
-	output_loc += '\\' + tag->name;
-	output_loc.erase(output_loc.rfind('.'));
-	output_loc += ".h";
+	std::string output_loc = dir_loc;	
+
+	
+	tag->name=tag->name.erase(tag->name.rfind('.'));
+	char c_data[4];
+	for(int i=0;i<4;i++)
+	 c_data[i] = tag->name[3-i];
+
+	uint32_t  type= *(uint32_t *)c_data;
+	std::string group_name = tag_group_names.at(type);
+	
+	
+	output_loc += '\\' + tag->name + ".h";
+	
 
 	std::ofstream fout(output_loc.c_str());
 
@@ -22,19 +30,15 @@ void _dump_tag_struct(tag_struct* tag)
 	fout << "#include\"..\\..\\DataTypes\\DataTypes.h\"\n";
 	fout << "#include\"..\\..\\tag_block_assert.h\"\n\n\n";
 
-
-
-
-	std::string struct_name = _correct_var_name(tag->name.substr(0, tag->name.rfind('.')));
-	struct_name[0] = std::tolower(struct_name[0]);//lower the tag_name
+		
 
 	fout << "\t\t/********************************************************************* \n\
-		* name: \n\
-		* group_tag : " << struct_name << "\n \
+		* name: "<< group_name<<"\n\
+		* group_tag : " << tag->name << "\n \
 		* header size : " << tag->base_size << "\n\
 		* *********************************************************************/ \n";
 
-	fout << "struct s_" + struct_name + "\n{\n";
+	fout << "struct s_" << group_name <<"_group_definition"<< "\n{\n";
 	int offset = 0x0;
 	for (int i = 0; i < tag->child_fields.size(); i++)
 	{
@@ -177,7 +181,7 @@ void _dump_tag_struct(tag_struct* tag)
 		offset = tag->base_size;
 	}
 	fout << "};\n";
-	fout << "TAG_BLOCK_SIZE_ASSERT(s_" << struct_name << ",0x" << std::uppercase << std::hex << tag->base_size << ");\n";
+	fout << "TAG_GROUP_SIZE_ASSERT(s_" << group_name << "_group_definition"<< ",0x" << std::uppercase << std::hex << tag->base_size << ");\n";
 	fout.close();
 }
 void _dump_bitfield(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
@@ -265,7 +269,7 @@ void _dump_enum(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream& fout)
 {
 	std::string struct_name = _correct_var_name(field->name);
-	fout << "struct s_" + struct_name + "\n{\n";
+	fout << "struct s_" + struct_name <<"_block"<< "\n{\n";
 	int offset = 0x0;
 
 	for (int i = 0; i < field->child_fields.size(); i++)
@@ -409,8 +413,8 @@ void _dump_reflexive_struct(std::shared_ptr<_plugin_field> field, std::ofstream&
 		offset = field->block_size;
 	}
 	fout << "};\n";
-	fout << "TAG_BLOCK_SIZE_ASSERT(s_" << struct_name << ",0x" << std::hex << field->block_size << ");\n";
-	fout << "tag_block<s_" << struct_name << "> " << struct_name << ";";
+	fout << "TAG_BLOCK_SIZE_ASSERT(s_" << struct_name << "_block"<< ",0x" << std::hex << field->block_size << ");\n";
+	fout << "tag_block<s_" << struct_name << "_block"<< "> " << struct_name << ";";
 }
 void _write_padding(int pad_size, std::ofstream& file)
 {

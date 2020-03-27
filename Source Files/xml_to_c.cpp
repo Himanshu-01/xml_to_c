@@ -47,9 +47,8 @@ void read_directory(const std::string& name, std::vector<std::string>& v)
 		FindClose(hFind);
 	}
 }
-int main(int argc, char* args[])
-{
-
+int main()
+{	
 	char temp[256];
 	std::string directory;
 	GetCurrentDirectoryA(sizeof(temp), temp);
@@ -66,10 +65,7 @@ int main(int argc, char* args[])
 			std::cout << "dumping plugin %s\n" << plugin_list[i];
 			tag_struct* temp = struct_generator::_generate_tag_struct(plugin_list[i]);
 			_dump_tag_struct(temp);
-		}
-			
-			
-		
+		}		
 	}
 	
 	getchar();

@@ -186,6 +186,7 @@
     <ClInclude Include="..\Blam\Maths\RealVector2D.h" />
     <ClInclude Include="..\Blam\Maths\RealVector3D.h" />
     <ClInclude Include="..\Header Files\pch.h" />
+    <ClInclude Include="..\Header Files\tag_group_names.h" />
     <ClInclude Include="..\Header Files\tinyxml2.h" />
     <ClInclude Include="..\Header Files\_dump_c_struct.h" />
     <ClInclude Include="..\Header Files\_generate_struct.h" />

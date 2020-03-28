@@ -60,7 +60,7 @@ int main()
 	for (int i = 2; i < plugin_list.size(); i++)//first two elements arent of our intrest
 	{
 		
-		if ((plugin_list[i].find(".xml")))
+		if ((plugin_list[i].rfind(".xml"))!=std::string::npos)
 		{
 			std::cout << "dumping plugin %s\n" << plugin_list[i];
 			tag_struct* temp = struct_generator::_generate_tag_struct(plugin_list[i]);

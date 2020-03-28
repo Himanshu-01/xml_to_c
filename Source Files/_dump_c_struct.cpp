@@ -21,7 +21,7 @@ void _dump_tag_struct(tag_struct* tag)
 	std::string group_name = tag_group_names.at(type);
 	
 	
-	output_loc += '\\' + tag->name + ".h";
+	output_loc += '\\' + group_name + "_definition.h";
 	
 
 	std::ofstream fout(output_loc.c_str());

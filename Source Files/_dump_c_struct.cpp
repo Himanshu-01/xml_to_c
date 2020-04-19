@@ -13,15 +13,26 @@ void _dump_tag_struct(tag_struct* tag)
 
 	
 	tag->name=tag->name.erase(tag->name.rfind('.'));
+	std::replace(tag->name.begin(), tag->name.end(), '_', '*');
+	
+
 	char c_data[4];
 	for(int i=0;i<4;i++)
 	 c_data[i] = tag->name[3-i];
 
 	uint32_t  type= *(uint32_t *)c_data;
-	std::string group_name = tag_group_names.at(type);
+	std::string group_name;
+	try {
+		group_name = tag_group_names.at(type);
+	}
+	catch (char *excp) {
+		return;
+	
+	}
 	
 	
-	output_loc += '\\' + group_name + "_definition.h";
+	
+	output_loc += '\\' + group_name + "_definition.hpp";
 	
 
 	std::ofstream fout(output_loc.c_str());

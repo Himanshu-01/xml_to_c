@@ -62,9 +62,12 @@ int main()
 		
 		if ((plugin_list[i].rfind(".xml"))!=std::string::npos)
 		{
-			std::cout << "dumping plugin %s\n" << plugin_list[i];
+			std::cout << "\ndumping plugin " << plugin_list[i];
 			tag_struct* temp = struct_generator::_generate_tag_struct(plugin_list[i]);
 			_dump_tag_struct(temp);
+			
+
+			
 		}		
 	}
 	
